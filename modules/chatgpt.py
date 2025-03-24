@@ -1,7 +1,7 @@
 import openai
 
 # Configurar clave de la API de OpenAI
-openai.api_key = "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"
+openai.api_key = "YOUR_API_KEY"
 
 # Esto es solo un ejemplo, en tu código puede variar
 def get_chatgpt_response(user_message):
