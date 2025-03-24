@@ -1,0 +1,10 @@
+curses
+pydub
+simpleaudio
+gTTS
+textblob
+googletrans
+nrclex
+numpy
+scipy
+openai==0.28.0
