@@ -109,49 +109,69 @@ face_patterns_mouth = {
         "             ",
         "             ",
         "             ",
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Closed mouth
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "             ",
+        "             ",
+        "             ",
+        "             ",
+        "             ",
+
     ],
-    "s_sound": [
+    "s_sound": [ # Corregido nombre 'sOsound' a 's_sound'
         "             ",
         "             ",
         "             ",
-        "                            _______-------_______ ",
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Closed mouth for 's' sound
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Closed mouth
-        "                       OOOOOOOOOOOOOOOOOOOOOOO0000OOO ",
+        "                                OOOOOOOOOOOOO                  ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "                          OOOOOOOOOOOOOOOOOOOOOOOO    ",
+        "             ",
+        "             ",
+        "             ",
+        "             ",
+
     ],
-    "talking_1": [  # Slightly open mouth
+    "talking_1": [ # Corregido nombre 'talkingO1' a 'talking_1'
+        "             ",
+        "             ",
+        "             ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
         "             ",
         "             ",
         "             ",
         "             ",
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Bottom part of slightly open mouth
+
     ],
-    "talking_2": [  # Fully open mouth
+    "talking_2": [ # Corregido nombre 'talkingO2' a 'talking_2'
         "             ",
         "             ",
         "             ",
         "             ",
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Bottom part of open mouth
-        "                 OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00    ",   # Lower part of open mouth
-        "                    00OOOOO0000OOOOOOOOOOOOOOOOOOOOOOO       ",   # Lowest part of open mouth
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "                 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO    ",
+        "                    OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO       ",
     ],
-    "closed_mouth_open": [ # For closed eyes with mouth open (if needed)
+    "closed_mouth_open": [ # Corregido nombre 'closedOmouthOopen' a 'closed_mouth_open'
+         # Este patrón parece más una boca abierta que una cerrada
+         # Lo mantendré como está pero considera si el nombre es correcto
         "             ",
         "             ",
         "             ",
         "             ",
-        "                OOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO000000   ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ", # Top part of slightly open mouth
-        "              OOOOOOOOOOOOOOOOOOOOOOO0000OOOOOOOOOOOOO00000000 ",   # Bottom part of slightly open mouth
+        "                OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ",
+        "              OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO ", # Bottom part of slightly open mouth
+        "             ",
+        "             ",
+        "             ",
     ],
 }
 

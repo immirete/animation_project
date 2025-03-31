@@ -1,4 +1,4 @@
-curses
+pygame
 pydub
 simpleaudio
 gTTS
