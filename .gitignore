@@ -1,1 +1,4 @@
 /.DS_Store
+.env
+output_audio.mp3
+output_roboto.wav

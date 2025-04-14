@@ -1,7 +1,12 @@
+import os
 import openai
+from dotenv import load_dotenv
 
-# Configurar clave de la API de OpenAI
-openai.api_key = "YOUR_API_KEY"
+# Cargar variables del entorno
+load_dotenv()
+
+# Configurar la clave (versión antigua)
+openai.api_key = os.getenv("OPENAI_API_KEY")  # Asegúrate de que el nombre coincide con tu .env
 
 # Esto es solo un ejemplo, en tu código puede variar
 def get_chatgpt_response(user_message):

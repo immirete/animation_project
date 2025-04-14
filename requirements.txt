@@ -8,3 +8,4 @@ nrclex
 numpy
 scipy
 openai==0.28.0
+python-dotenv
