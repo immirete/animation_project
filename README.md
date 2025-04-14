@@ -1,6 +1,6 @@
 # 🚀 Animated Assistant 🤖
 
-![Project Banner](./assets/banner.png)  
+![Project Banner](./animation_project.gif)  
 *An expressive virtual assistant with natural language processing and dynamic facial animations*
 
 ---
