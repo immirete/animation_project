@@ -9,3 +9,9 @@ numpy
 scipy
 openai==0.28.0
 python-dotenv
+SpeechRecognition==3.10.0
+sounddevice
+face_recognition==1.3.0
+opencv-python==4.8.0.76
+numpy==1.24.0
+SpeechRecognition==3.10.0

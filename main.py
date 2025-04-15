@@ -4,6 +4,7 @@ import curses
 from modules import display
 from modules import chatgpt
 import asyncio
+from modules import transcription_module # Importa el nuevo módulo
 
 
 # Test texts
@@ -50,6 +51,93 @@ def get_response_from_prompt(stdscr, display_mode):
     else:
         asyncio.run(run_matrix_animation(response))
 
+def get_response_from_transcription(stdscr, display_mode):
+    """Obtiene texto transcrito, consulta a ChatGPT y muestra animación"""
+    stdscr.clear()
+    stdscr.addstr(4, 5, "Preparando para transcribir...")
+    stdscr.addstr(6, 5, "La ventana de video se abrirá.")
+    stdscr.addstr(7, 5, "Mira a la cámara y habla.")
+    stdscr.addstr(8, 5, "Cuando desvíes la mirada, se procesará tu voz.")
+    stdscr.addstr(9, 5, "(Presiona 'q' en la ventana de video para cancelar)")
+    stdscr.refresh()
+
+    # --- Importante: Salir del modo curses temporalmente ---
+    # curses y cv2.imshow/waitKey no se llevan bien siempre.
+    # Es mejor cerrar curses, ejecutar la transcripción (que usa cv2),
+    # y luego reiniciar curses si es necesario, o simplemente mostrar el resultado final.
+    curses.endwin() # Termina curses temporalmente
+
+    print("\n" + "="*30)
+    print(" Iniciando Módulo de Transcripción ")
+    print("="*30 + "\n")
+
+    transcribed_text = None
+    try:
+        # Llama a la función del módulo de transcripción
+        transcribed_text = transcription_module.start_transcription_and_get_text()
+    except Exception as e:
+         print(f"\n[ERROR] Ocurrió un error al ejecutar el módulo de transcripción: {e}\n")
+         # Podrías querer esperar antes de volver a curses
+         input("Presiona Enter para volver al menú...")
+
+
+    # ---- INICIO DE LA PARTE QUE TE FALTA ----
+
+    # 4. Definir una función interna para manejar los resultados DENTRO de un nuevo curses
+    def show_result_in_curses(stdscr_new):
+        """Esta función se ejecuta dentro de un nuevo wrapper de curses."""
+        curses.curs_set(0) # Ocultar cursor
+        stdscr_new.clear()
+
+        # 5. Verificar si se obtuvo texto
+        if transcribed_text:
+            stdscr_new.addstr(4, 5, f"Texto transcrito: {transcribed_text[:80]}{'...' if len(transcribed_text)>80 else ''}") # Muestra parte del texto
+            stdscr_new.addstr(6, 5, "Enviando a ChatGPT...")
+            stdscr_new.refresh()
+
+            # 6. Intentar obtener respuesta de ChatGPT
+            try:
+                response = chatgpt.get_chatgpt_response(transcribed_text)
+                # Limpiar "Enviando..." antes de la animación
+                stdscr_new.clear()
+                stdscr_new.refresh()
+
+                # 7. Ejecutar la animación con la RESPUESTA de ChatGPT
+                if display_mode == 'terminal':
+                     # Pasar el nuevo stdscr_new a la animación de terminal
+                     # Asegúrate que run_terminal_animation pueda manejar esto
+                     asyncio.run(run_terminal_animation(stdscr_new, response))
+                     # La animación terminal ya usa curses, podría no necesitar pausa adicional
+                     # Pero añadimos una por consistencia, por si la animación no espera
+                     stdscr_new.addstr(stdscr_new.getmaxyx()[0] - 2, 5, "Animación completada. Presiona una tecla...")
+                     stdscr_new.getch()
+                else: # 'matrix'
+                     # Matrix se ejecuta (simulada) fuera de curses directamente
+                     asyncio.run(run_matrix_animation(response))
+                     # Mostrar mensaje de finalización en la ventana de curses
+                     stdscr_new.clear()
+                     stdscr_new.addstr(5, 5, "Animación Matrix completada (simulada).")
+                     stdscr_new.addstr(7, 5, "Presiona una tecla para volver al menú.")
+                     stdscr_new.getch() # Esperar tecla
+
+            except Exception as e:
+                # 8. Manejar errores de ChatGPT
+                stdscr_new.clear()
+                stdscr_new.addstr(5, 5, f"Error al obtener respuesta de ChatGPT: {e}")
+                stdscr_new.addstr(7, 5, "Presiona una tecla para continuar.")
+                stdscr_new.getch() # Esperar tecla
+        else:
+            # 9. Si no hubo texto transcrito
+            stdscr_new.addstr(4, 5, "No se obtuvo texto transcrito o se canceló.")
+            stdscr_new.addstr(6, 5, "Presiona una tecla para volver al menú.")
+            stdscr_new.getch() # Esperar tecla
+
+    # 10. Ejecutar la función de resultados dentro de curses.wrapper
+    # Esto reinicia curses de forma segura para mostrar los resultados
+    curses.wrapper(show_result_in_curses)
+
+    # ---- FIN DE LA PARTE QUE TE FALTA ----
+
 def choose_display_mode(stdscr):
     """Permite al usuario elegir el modo de visualización"""
     stdscr.clear()
@@ -70,6 +158,8 @@ def choose_operation_mode(stdscr, display_mode):
     stdscr.addstr(4, 5, "Elige un modo de operación:")
     stdscr.addstr(6, 5, "1. Modo ChatGPT (ingresar pregunta)")
     stdscr.addstr(7, 5, "2. Modo de prueba (animación predefinida)")
+    stdscr.addstr(8, 5, "3. Modo Transcripción + ChatGPT (hablar)") # Nueva opción
+    stdscr.addstr(10, 5, "q. Salir")
     stdscr.refresh()
 
     curses.echo()
@@ -78,11 +168,34 @@ def choose_operation_mode(stdscr, display_mode):
 
     if chr(mode_choice) == '1':
         get_response_from_prompt(stdscr, display_mode)
+    elif mode_choice == ord('2'):
+            stdscr.clear()
+            stdscr.addstr(4, 5, "Ejecutando animación de prueba...")
+            stdscr.refresh()
+            # Usar el texto de prueba mult Emoción
+            texto_prueba = texto_multi_emocion
+            if display_mode == 'terminal':
+                 # Llamamos directamente a la función async dentro de asyncio.run
+                 # Necesitamos pasar el stdscr actual
+                 asyncio.run(run_terminal_animation(stdscr, texto_prueba))
+            else:
+                 asyncio.run(run_matrix_animation(texto_prueba))
+                 # Añadir mensaje de finalización para el modo matrix en curses
+                 stdscr.clear()
+                 stdscr.addstr(5,5, "Animación Matrix de prueba completada (simulada).")
+                 stdscr.addstr(7,5, "Presiona una tecla para volver al menú.")
+                 stdscr.getch()
+    elif mode_choice == ord('3'):
+            # Llama a la función que maneja la transcripción y la llamada a ChatGPT
+            get_response_from_transcription(stdscr, display_mode)
+            # Después de que get_response_from_transcription termine (y su wrapper de curses interno),
+            # el bucle while hará que se muestre el menú de nuevo.
+
     else:
-        if display_mode == 'terminal':
-            curses.wrapper(lambda stdscr: asyncio.run(run_terminal_animation(stdscr, texto_multi_emocion)))
-        else:
-            asyncio.run(run_matrix_animation(texto_multi_emocion))
+            stdscr.addstr(12, 5, "Opción inválida. Inténtalo de nuevo.")
+            stdscr.refresh()
+            curses.napms(1000) # Pausa de 1 segundo
+
 
 def main(stdscr):
     """Función principal"""
